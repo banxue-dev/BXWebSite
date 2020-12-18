@@ -110,6 +110,26 @@ var loadRandomeCase=function(container,count){
 			}
 		});	
 }
+var loadRandomeNews=function(container,count){
+	admin.req({
+			name:'newsInfo',
+			interface:'getRandomNewsInfoList',
+			data:{count:count},
+			done:function(data){
+				var html='';
+				for(var i=0;i<data.length;i++){
+
+			        html+='<div class="xm3 xs3 xl6 margin-large-bottom text-center">';
+			        html+=' <div class="item"><a href="/main/a/news/hyxw/7.html" title="'+data[i].newsTitle+'">';
+			        html+='    <div class="artzoomimgs" style="background-image:url('+data[i].newsImg+')"></div>';
+			        html+='    <h3>'+data[i].newsTitle+'</h3>';
+			        html+='   <p class="desc">'+data[i].newsBrief+'</p>';
+			        html+='    </a></div></div>';
+				}
+			    $(container).html(html);
+			}
+		});	
+}
 //加载联系方式
 loadContactInfo();
 loadAboutOurInfo();
