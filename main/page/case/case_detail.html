@@ -1,0 +1,71 @@
+﻿
+<!-- FOR IE9 below -->
+
+<!--[if lt IE 9]>
+
+	<script src="/main/style/js/respond.js"></script>
+
+<![endif]-->
+
+
+<!-- 顶部导航 end--> 
+
+<!-- 轮播图片 begin-->
+
+<div class="layout">
+  <div class="slideshow" style="background-image:url(/main/style/images/product.jpg)"> </div>
+</div>
+
+<!-- 轮播图片 end--> 
+
+<!-- 内容展示 begin-->
+
+<div class="layout"  id="fh5co-content_show">
+  <div class="container">
+    <div class="content-boxs">
+      <div class="show_content margin-big-top  content_detail">
+        <div class="detail" id="caseDetailShow">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="layout" id="fch5co-rec-products">
+    <div class="container">
+      <h4><span>您可能也喜欢</span></h4>
+      <div class="line-big show-product" id="randomCaseListDetail">
+
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  loadRandomeCase('#randomCaseListDetail',4);
+  function getCaseDetail(caseId){
+    if(caseId==-1){
+      return;
+    }
+    admin.req({
+      name:'caseInfo',
+      interface:'getCaseInfoDetail',
+      data:{caseInfoId:caseId||pageParams.id},
+      done:function(data){
+          if(data){
+            var html='';
+            html+='<h1>'+data.caseName+'</h1>';
+            html+='<div class="description margin-top">';
+            html+='<div >'+data.caseContent+'</div>';
+            html+='<ul class="pager">';
+            html+=' <li><a onclick="getCaseDetail('+(data.prevId||-1)+')" href="javascript:;">上一篇：'+(data.prevName || '没有了')+'</a> </li>';
+            html+=' <li><a onclick="getCaseDetail('+(data.nextId||-1)+')"  href="javascript:;">下一篇：'+(data.nextName||'没有了')+'</a> </li>';
+            html+='</ul>';
+            html+='</div>';
+            $('#caseDetailShow').html(html);
+          }
+      }
+    });
+  }
+  getCaseDetail();
+</script>
+
+<!-- 内容展示 end--> 

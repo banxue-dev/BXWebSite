@@ -1,0 +1,58 @@
+﻿
+
+
+<!-- 轮播图片 begin-->
+
+<div class="layout">
+  <div class="slideshow" style="background-image:url(/main/style/images/news.jpg)"> </div>
+</div>
+
+<!-- 轮播图片 end--> 
+
+<!-- 内容展示 begin-->
+
+<div class="layout"  id="fh5co-content_show">
+  <div class="container">
+    <div class="line-big  padding-big-top">
+      <div class="d-boxs d-pad">
+        <div class="show_content padding-large-bottom content_detail" id="newsDetailShow">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function getNewsDetail(newsId){
+    if(newsId==-1){
+      return;
+    }
+    admin.req({
+      name:'newsInfo',
+      interface:'getNewsInfoDetail',
+      data:{newsInfoId:newsId||pageParams.id},
+      done:function(data){
+          if(data){
+            var html='';
+
+            html+='<div class="show_body detail" >';
+            html+='<h1>'+data.newsTitle+'</h1>';
+            html+='<div class=" padding-bottom text-center qhd-title">';
+            html+='	<span><strong>作者：</strong>'+data.newsAuther+'</span> ';
+            html+='	<span><strong>日期：</strong>'+data.createTime+'</span> ';
+            html+='</div>';
+            html+='<div  >';
+            html+=data.newsContent;
+            html+='</div> </div>';
+            html+='<ul class="pager padding-big-top padding-big-bottom">';
+            html+=' <li><a onclick="getNewsDetail('+(data.prevId||-1)+')" href="javascript:;">上一篇：'+(data.prevName || '没有了')+'</a> </li>';
+            html+=' <li><a onclick="getNewsDetail('+(data.nextId||-1)+')"  href="javascript:;">下一篇：'+(data.nextName||'没有了')+'</a> </li>';
+            html+='</ul>';
+            $('#newsDetailShow').html(html);
+          }
+      }
+    });
+  }
+  getNewsDetail();
+</script>
+<!-- 内容展示 end--> 

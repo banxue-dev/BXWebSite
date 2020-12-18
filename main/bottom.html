@@ -1,0 +1,65 @@
+﻿<div class="layout">
+    <div class="container">
+      <div class="line foot-top hidden-l text-center not-animated"  data-animate="fadeInUp" data-delay="200">
+        <div class="xl12 xs6 xm3 margin-large-bottom">
+          <p><span class="ficon-1" ></span><label id="bot_addr">江苏省淮海西路241号</label></p>
+        </div>
+        <div class="xl12 xs6 xm3 margin-large-bottom">
+          <p><span class="ficon-2"></span><label id="bot_phone">联系电话：4008-888-888</label></p>
+        </div>
+        <div class="xl12 xs6 xm3 margin-large-bottom">
+          <p><span class="ficon-3"></span><label id="bot_worktime">工作时间：09:00—18：00</label></p>
+        </div>
+        <div class="xl12 xs6 xm3 margin-large-bottom">
+          <p><span class="ficon-4"></span><a id="bot_a_mail" href="mailto:250206374@qq.com" target="_blank">250206374@qq.com</a></p>
+        </div>
+      </div>
+      <div class="line foot-bot">
+        <div class="block-item text-center">
+          <div class="foot-nav"> 
+          <a class="first-level" onclick="tobar(0,'/main/main.html');" href='javascript:void(0);'>首页</a>
+          
+          <a class="first-level" onclick="tobar(1,'/main/page/service/index.html');"  href='javascript:void(0);' >服务范畴</a>
+          
+          <a class="first-level" onclick="tobar(2,'/main/page/case/index.html');"  href='javascript:void(0);'>案例展示</a>
+          
+          <a class="first-level" onclick="tobar(3,'/main/page/news/index.html');"  href='javascript:void(0);'>新闻资讯</a>
+          
+          <a class="first-level" onclick="tobar(4,'/main/page/about/index.html');"  href='javascript:void(0);'>关于我们</a>
+          
+          <a class="first-level" onclick="tobar(5,'/main/page/contact/index.html');"  href='javascript:void(0);'>联系我们</a>
+          
+          <a class="first-level" onclick="tobar(6,'/main/page/message/index.html');"  href='javascript:void(0);'>在线留言</a>
+          
+          </div>
+          <div class="copy" ><label id="botCompanyEmail">250206374@qq.com</label>&nbsp;&nbsp;备案号:<label id="bot_web_recode"></label>&nbsp;&nbsp;</div>
+          <div class="foot-link">友情链接：<a href='http://www.dedesos.com/' target='_blank'>织梦源码</a> <a href='http://www.dedesos.com/' target='_blank'>模板王</a> <a href='http://www.dedesos.com' target='_blank'>织梦模版</a> <a href='http://www.dedesos.com/' target='_blank'>手机网站模板</a> <a href='http://www.dedesos.com/' target='_blank'>discuz模版</a> <a href='http://www.dedesos.com/' target='_blank'>网址源码</a> <a href='http://www.dedesos.com/' target='_blank'>网站模版</a> <a href='http://www.dedesos.com/' target='_blank'>响应式网站模板</a> <a href='http://fang.dedesos.com/' target='_blank'>仿站网</a> <a href='http://www.dedesos.com/' target='_blank'>dede模版</a> <a href='http://sc.dedesos.com/' target='_blank'>图标素材</a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="blank55"></div>
+  <div id="toolbar" class="layout text-center">
+    <div class="x3"><a href=""><span class="icon-home"></span>首页</a></div>
+    <div class="x3"><a id="companyPhone" href="javascript:void(0);"><span class="icon-phone"></span>电话</a></div>
+    <div class="x3"><a id="companySms" href="javascript:void(0);"><span class="icon-envelope-o"></span>短信</a></div>
+    <div class="x3"><a onclick="tobar(5,'/main/page/contact/index.html');"  href='javascript:void(0);'><span class="icon-user"></span>联系</a></div>
+  </div>
+  <script type="text/javascript">
+
+      var initBottom=function(){
+        var tempc=global_config.contactInfo;
+        $('#botCompanyEmail').html(tempc.companyEmail);
+        $('#companyPhone').attr('href','tel:'+tempc.contactPhone);
+        $('#companySms').attr('href','sms:'+tempc.contactPhone);
+
+
+        $('#bot_addr').html(tempc.companyAddr);
+        $('#bot_web_recode').html(tempc.webRecordCode);
+        $('#bot_worktime').html(tempc.companyWorkTime);
+        $('#bot_phone').html(tempc.contactPhone);
+        $('#bot_a_mail').html(tempc.companyEmail);
+        $('#bot_a_mail').attr('href','mailto:'+tempc.contactPhone);
+      }
+      initBottom();
+    </script>

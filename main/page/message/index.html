@@ -1,0 +1,113 @@
+
+
+
+<!-- 顶部导航 end--> 
+
+<!-- 轮播图片 begin-->
+
+<div class="layout">
+  <div class="slideshow" style="background-image:url(/main/style/images/contact.jpg)"> </div>
+</div>
+
+<!-- 轮播图片 end--> 
+
+<!-- 内容展示 begin-->
+
+<div class="layout"  id="fh5co-content_show" style="background:#fff">
+  <div class="layout inner-nav margin-big-bottom">
+    <div class="container">
+      <h2 class="text-center">在线留言</h2>
+      
+    </div>
+  </div>
+  <div class="container">
+    <div class="content-boxs">
+      <div class="show_content padding-large-bottom">
+        <form id="leavingMessageForm">
+          <div class="form-group">
+            <div class="field">
+              <input type="text" class="input" id="customerName" valid="required" tips="请输入姓名" name="customerName" size="50" placeholder="姓名" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="field">
+              <input type="text" class="input" id="customerPhone" name="customerPhone" valid="required" tips="必须为11位手机号" size="50"  placeholder="手机号" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="field">
+              <input type="text" class="input" id="customerEmail" name="customerEmail" valid="email" tips="邮箱格式不正确" placeholder="邮箱" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="field">
+              <textarea  class="input" id="customerContent" name="customerContent"  data-validate="required:请输入内容" placeholder="内容"></textarea>
+            </div>
+          </div>
+          <div class="form-button">
+            <div class="button bg-main margin-small-right" onclick="submitMessage()">提交</div>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+  
+  function valid(va,vt){
+      switch(vt){
+        case 'required':
+          if(va.length<1){
+            return false;
+          }
+          break;
+        case 'email':
+            if(!reg.test(va)){
+            }
+          break;
+        case 'phone':
+          if(va.length!=11){
+            return false;
+          }
+          break;
+        default:
+          return true;
+      }
+      return true;
+  } 
+  function submitMessage(){
+    var params={
+      customerName:'',
+      customerEmail:'',
+      customerPhone:'',
+      customerContent:''
+    };
+    var isSub=true;
+    $(':input').each(function(){
+      var v=valid($(this).val(),$(this).attr('valid'));
+
+      if(!v){
+        alert($(this).attr('tips'));
+        isSub=false;
+        return false;
+      }
+        params[$(this).attr('name')]=$(this).val();
+      
+    })
+    if(isSub){
+      admin.req({
+        name:'leavingMessage',
+        interface:'addLeavingMessageInfo',
+        data:params,
+        success:function(res){
+          if(res.code=='000000'){
+            alert('提交成功');
+          }else{
+            alert(res.msg);
+          }
+        }
+      })
+    }
+  }
+</script>

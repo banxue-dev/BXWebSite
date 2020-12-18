@@ -1,0 +1,99 @@
+﻿
+<!-- 顶部导航 end--> 
+
+<!-- 轮播图片 begin-->
+
+<div class="layout">
+  <div class="slideshow" style="background-image:url(/main/style/images/product.jpg)"> </div>
+</div>
+
+<!-- 轮播图片 end--> 
+
+<!-- 内容展示 begin-->
+
+<div class="layout"  id="fh5co-content_show">
+  <div class="layout inner-nav margin-big-bottom">
+    <div class="container">
+      <h2 class="text-center">案例展示</h2>
+      <ul class="nav submenu" id="subnav">
+        
+        
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <div class="show_content padding-large-bottom">
+      <div class="show_list product_list_box padding-big-top">
+        <div class="show-product">
+          <div class="line-big" id="detail_show_case">
+
+          </div>
+        </div>
+      </div>
+      <div class="pagess">
+    <ul>
+     <li><span class="pageinfo">共 <strong id="casePageSum"></strong>页<strong id="caseSumCount"></strong>条记录</span></li>
+
+    </ul>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- 内容展示 end--> 
+
+<!--footer-->
+<script type="text/javascript">
+  
+  var caseobj={
+    pages:{
+      page:1,
+      limit:10
+    },
+    doData:function(groupId){
+      if(groupId){
+
+      caseobj.pages.caseGroupId=groupId;
+      }
+      admin.req({
+        name:'caseInfo',
+        interface:'getCaseInfoListByPage',
+        data:caseobj.pages,
+        success:function(res){
+          if(res.code='000000'){
+            var data=res.data;
+            //构建页面
+            var html='';
+            for(var i=0;i<data.length;i++){
+              html+='<div class="xm3 xs4 xl6 margin-big-bottom text-center"><a data-id='+data[i].caseId+' onclick="tobar(2,'+("'/main/page/case/case_detail.html'")+',this);"  href="javascript:void(0);" title="">';
+                  html+='    <div class="media-img">';
+                  html+='      <div class="zoomimgs" style="background-image:url('+data[i].caseImg+')"></div>';
+                  html+='    </div>';
+                  html+='    <h3>'+data[i].caseName+'</h3>';
+                  html+='    </a></div>';
+            }
+              $('#detail_show_case').html(html);
+              $('#casePageSum').html(res.totalPage);
+              $('#caseSumCount').html(res.count);
+          }else{
+
+              $('#detail_show_case').html('此条目暂无案例');
+          }
+        }
+      })
+    },
+    showGroup:function(){
+      var caseGroupHtml='';
+      var temg=global_config.groupConfig;
+      for(var gi=0;gi<temg.length;gi++){
+        if(temg[gi].groupType==groupType.case){
+          caseGroupHtml='<li><a onclick="caseobj.doData('+temg[gi].groupId+')" href="javascript:void(0);" >'+temg[gi].groupName+'</a></li>';
+          $('#subnav').append(caseGroupHtml);
+        }
+      }
+    }
+
+  }
+  caseobj.showGroup();
+  caseobj.doData();
+</script>
