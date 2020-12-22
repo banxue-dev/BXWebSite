@@ -1,6 +1,7 @@
 
 var global_config={
-	backuprequesturl: 'http:\/\/localhost:8091/family/' //全局请求前缀
+	//backuprequesturl: 'http:\/\/localhost:8091/family/' //全局请求前缀
+	backuprequesturl: 'http:\/\/www.banxue.fun:8091/family/' //全局请求前缀
 	,reqver:'/v1.0/'
 }
 var pageParams={};
