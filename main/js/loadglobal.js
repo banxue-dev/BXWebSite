@@ -26,9 +26,9 @@ var cntloadding_={
 		setCaontHeight:function(ca){
 			//设置当容器高度为0时的默认高度
 			if(cntloadding_.container.height<1){
-				$(ca).height(100);
+				//$(ca).height(100);
 			}else{
-				$(ca).height(cntloadding_.container.height);
+				//$(ca).height(cntloadding_.container.height);
 			}
 		}
 	},
@@ -46,7 +46,7 @@ var cntloadding_={
 	}
 	,hide:function(){
 		$('#wb_loader_show').hide();
-			console.log('loadingHide');
+			//console.log('loadingHide');
 	}
 }
 var admin={
@@ -54,8 +54,9 @@ var admin={
 		options.data = options.data || {};
 		options.data=$.extend(options.data,{orgCode:'2323020606142230135144314536332747182433141833503111181661242752'});
 		options.loadele && cntloadding_.show(options.loadele);
+		options.interface=global_config.backuprequesturl+options.name+global_config.reqver+(options.notapi?'':'api/')+options.interface;
 		$.ajax({
-			url:global_config.backuprequesturl+options.name+global_config.reqver+'api/'+options.interface,
+			url:options.interface,
 			type:'post',
 			data:options.data,
 			dataType:'json',
@@ -86,11 +87,12 @@ function tobar(ind,url,ele){
 	}
 	loadhtml_('#main_',url);
 }
-function loadhtml_(ele,uri){
+function loadhtml_(ele,uri,call_){
 	$.ajax({
 		url:uri,
 		success:function(res){
 			$(ele).html(res);
+			call_&& call_();
 		},error:function(r){
 			console.log(r);
 		}
@@ -107,8 +109,6 @@ var loadContactInfo=function(){
 			//浏览器标题显示用的
 			$('#top_title').html(data.webTitle);
 			loadGroupInfo();
-			loadhtml_('#fh5co-header','/main/header.html');
-			loadhtml_('#global_bottom','/main/bottom.html');
 		}
 	});
 }
@@ -128,12 +128,30 @@ var loadAboutOurInfo=function(){
 	//加载关于我们
 	admin.req({
 		name:'aboutOurInfo',
-		interface:'getAboutOurInfoList',
+		interface:'getAboutOurInfoSingle',
 		done:function(data){
-			global_config.aboutOurInfo=data[0];
-			loadhtml_('#main_','/main/main.html');
+			global_config.aboutOurInfo=data;
+			initDataLoaddBack();
 		}
 	});
+}
+//在初始数据加载完后，加载页面
+var initDataLoaddBack=function(){
+
+	loadhtml_('#fh5co-header','/main/header.html',initHeaderMainJs);
+	loadhtml_('#global_bottom','/main/bottom.html');
+	loadhtml_('#main_','/main/main.html');
+}
+//初始化所有的数据
+var initHeaderMainJs=function(){
+	mobileMenuOutsideClick();
+	offcanvasMenu();
+	burgerMenu();
+	mobileClickMenu();
+	if ( !isMobile.any() ) {
+	   //让所有的动画效果执行
+      dataAnimate();	
+	}
 }
 var loadRandomeCase=function(container,count){
 	admin.req({

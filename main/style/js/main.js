@@ -1,5 +1,4 @@
-;(function () {
-	
+
 	var isMobile = {
 		Android: function() {
 			return navigator.userAgent.match(/Android/i);
@@ -41,8 +40,9 @@
 	};
 
 
-	//关闭菜单
+	//复制菜单到移动端的
 	var offcanvasMenu = function() {
+
 		$('body').prepend('<div id="fh5co-offcanvas" />');
 		$('body').prepend('<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>');
 		$('#fh5co-offcanvas').append($('#fh5co-header .nav').clone());
@@ -53,7 +53,6 @@
 
 		$('body').on('click', '.js-fh5co-nav-toggle', function(event){
 			var $this = $(this);
-
 			$('body').toggleClass('fh5co-overflow offcanvas-visible');
 			$this.toggleClass('active');    
 	
@@ -107,18 +106,17 @@
 	};
 
 	$(function(){
-		mobileMenuOutsideClick();
+		/*mobileMenuOutsideClick();
 		offcanvasMenu();
 		burgerMenu();
 		mobileClickMenu();
 		if ( !isMobile.any() ) {
 		   //不是pc端就启动动态动画
 	      dataAnimate();	
-		}
+		}*/
 	});
 
 
-}());
 
 jQuery(document).ready(function(){
 
