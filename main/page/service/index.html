@@ -18,13 +18,6 @@
       <h2 class="text-center">服务范畴</h2>
       <ul class="nav submenu" id="subnav">
         
-        <li><a href='/main/a/service/s1/' title='移动端网站设计'>移动端网站设计</a></li>
-        
-        <li><a href='/main/a/service/s2/' title='PC端网站建设'>PC端网站建设</a></li>
-        
-        <li><a href='/main/a/service/s3/' title='营销策划'>营销策划</a></li>
-        
-        <li><a href='/main/a/service/s4/' title='品牌形象'>品牌形象</a></li>
         
       </ul>
     </div>
@@ -33,43 +26,54 @@
   <div class="container">
     <div class="content-boxs channel-box">
       <div class="detail">
-        <div class="about-boxss">
-          <div class="about-intro" style="text-align:initial">
-            &nbsp;高质量
-<div>
-	织梦帮模板网工作室认真对待每一个客户，我们不用口头语言来吹捧我们的优秀，成百上千的案例，见证着我们成长。</div>
-<div>
-	&nbsp;</div>
-<div>
-	高效率</div>
-<div>
-	直接与设计师、程序师沟通！我们崇尚速度，喜欢感受风驰电掣的狂飙，所以在3-5个工作日内我们为您提供最完美的方案，我们拒绝拖沓!</div>
-<div>
-	&nbsp;</div>
-<div>
-	高诚信</div>
-<div>
-	客户是什么，他们在想什么，需要我们做什么，这些问题一直困扰着我们。但是经过几年的实践，发现做好客户关系其实很容易，那就是真诚！<br />
-	<br />
-	<div>
-		织梦帮模板网自成立以来，一直专注于互联网品牌建设，我们团队的成员曾务于国内优秀广告公司及互联网公司业务类型涉及WEB视觉、交互设计、移动终端用户体验等质量和信誉是我们存在的基石。我们注重客户提出的每个要求，充分考虑每一个细节，积极的做好服务，努力开拓更好的视野。我们永远不会因为我们曾经的成绩而满足。在所有新老客户面前，我们都很乐意虚心、朴实的跟您接触，更深入的了解您的企业，以便为您提供更优质的服务！</div>
-	<div>
-		&nbsp;</div>
-	<div>
-		我们的服务宗旨:持续为客户创造最优质的服务</div>
-	<div>
-		&nbsp;</div>
-	<div>
-		感谢您选择织梦帮模板网，每一次倾心的合作都是一个全新的体会和挑战，让我们从沟通开始这次愉快的合作吧！</div>
-</div>
-<br />
-该模版有织梦帮模板网制作分享，本站唯一网址：Www.dedesos.com 加入VIP即可下载全部模版，联系QQ：250206374
-          </div>
+        <div class="about-boxss" id="serviceRangShowDiv" style="position:relative;">
+
         </div>
-        
       </div>
     </div>
   </div>
 </div>
 
 <!-- 内容展示 end--> 
+<script type="text/javascript">
+  
+      var temg=global_config.groupConfig;
+  var serviceRangeobj={
+    pages:{
+    },
+    doData:function(groupId){
+      if(groupId){
+
+        serviceRangeobj.pages.rangeGroupId=groupId;
+      }
+      admin.req({
+        name:'serviceRangeInfo',
+        interface:'getServiceRangeInfoSingle',
+        loadele:'#serviceRangShowDiv',
+        data:serviceRangeobj.pages,
+        success:function(res){
+          if(res.code='000000' && res.data){
+            var data=res.data;//只取第一个
+           
+            $('#serviceRangShowDiv').html(data.rangeContent);
+          }else{
+
+              $('#serviceRangShowDiv').html('此条目暂无介绍');
+          }
+        }
+      })
+    },
+    showGroup:function(){
+      var serviceRangeGroupHtml='';
+      for(var gi=0;gi<temg.length;gi++){
+        if(temg[gi].groupType==groupType.service){
+          serviceRangeGroupHtml='<li><a onclick="serviceRangeobj.doData('+temg[gi].groupId+')" href="javascript:void(0);" >'+temg[gi].groupName+'</a></li>';
+          $('#subnav').append(serviceRangeGroupHtml);
+        }
+      }
+    }
+
+  }
+  serviceRangeobj.showGroup();
+  serviceRangeobj.doData(temg[0].groupId);
+</script>

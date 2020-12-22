@@ -9,10 +9,50 @@ var groupType={
 	news:1,
 	service:3
 }
+var eleExist=function(ele){
+	if($(ele).length<1){
+		return false;
+	}
+	return true;
+}
+/*
+	内容加载框----会覆盖容器原数据
+*/
+var cntloadding_={
+	container:{
+		width:'100%',
+		height:'50',
+		setCaontHeight:function(ca){
+			//设置当容器高度为0时的默认高度
+			if(cntloadding_.container.height<1){
+				$(ca).height(100);
+			}else{
+				$(ca).height(cntloadding_.container.height);
+			}
+		}
+	},
+	show:function(container){
+
+		cntloadding_.container.width=$(container).width()+'px';
+		cntloadding_.container.height=$(container).height();
+		cntloadding_.container.setCaontHeight(container);
+		if(eleExist('#wb_loader_show')){
+			$('#wb_loader_show').show();
+		}else{
+			$(container||'body').append('<div id="wb_loader_show"  class="loader-container"><div class="loader four"></div></div>');
+			//$(container||'body').append('<div id="wb_loader_show" style="width:'+cntloadding_.container.width+';'+cntloadding_.container.getHeight()+';" class="loader-container"><div class="loader four"></div></div>');
+		}
+	}
+	,hide:function(){
+		$('#wb_loader_show').hide();
+			console.log('loadingHide');
+	}
+}
 var admin={
 	req:function(options){
 		options.data = options.data || {};
 		options.data=$.extend(options.data,{orgCode:'2323020606142230135144314536332747182433141833503111181661242752'});
+		options.loadele && cntloadding_.show(options.loadele);
 		$.ajax({
 			url:global_config.backuprequesturl+options.name+global_config.reqver+'api/'+options.interface,
 			type:'post',
@@ -26,7 +66,9 @@ var admin={
 				}else if (options.success){
 					options.success(res);
 				}
+				options.loadele &&cntloadding_.hide();
 			},error:function(r){
+				options.loadele &&cntloadding_.hide();
 				console.log('请求失败');
 			}
 		});
@@ -63,7 +105,7 @@ var loadContactInfo=function(){
 			global_config.contactInfo=data;
 			//浏览器标题显示用的
 			$('#top_title').html(data.webTitle);
-			loadhtml_('#main_','/main/main.html');
+			loadGroupInfo();
 			loadhtml_('#fh5co-header','/main/header.html');
 			loadhtml_('#global_bottom','/main/bottom.html');
 		}
@@ -77,7 +119,7 @@ var loadGroupInfo=function(){
 		done:function(data){
 			global_config.groupConfig=data;
 			//浏览器标题显示用的
-			
+			loadAboutOurInfo();
 		}
 	});
 }
@@ -88,6 +130,7 @@ var loadAboutOurInfo=function(){
 		interface:'getAboutOurInfoList',
 		done:function(data){
 			global_config.aboutOurInfo=data[0];
+			loadhtml_('#main_','/main/main.html');
 		}
 	});
 }
@@ -132,5 +175,3 @@ var loadRandomeNews=function(container,count){
 }
 //加载联系方式
 loadContactInfo();
-loadAboutOurInfo();
-loadGroupInfo();

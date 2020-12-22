@@ -25,7 +25,7 @@
     <div class="show_content padding-large-bottom">
       <div class="show_list product_list_box padding-big-top">
         <div class="show-product">
-          <div class="line-big" id="detail_show_case">
+          <div class="line-big" id="detail_show_case" style="position:relative;">
 
           </div>
         </div>
@@ -52,12 +52,12 @@
     },
     doData:function(groupId){
       if(groupId){
-
-      caseobj.pages.caseGroupId=groupId;
+        caseobj.pages.caseGroupId=groupId;
       }
       admin.req({
         name:'caseInfo',
         interface:'getCaseInfoListByPage',
+        loadele:'#detail_show_case',
         data:caseobj.pages,
         success:function(res){
           if(res.code='000000'){
@@ -72,7 +72,8 @@
                   html+='    <h3>'+data[i].caseName+'</h3>';
                   html+='    </a></div>';
             }
-              $('#detail_show_case').html(html);
+              // $('#detail_show_case').append('');
+             $('#detail_show_case').html(html);
               $('#casePageSum').html(res.totalPage);
               $('#caseSumCount').html(res.count);
           }else{

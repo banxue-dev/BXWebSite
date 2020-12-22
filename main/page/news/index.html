@@ -25,7 +25,7 @@
     <div class="content-boxs">
       <div class="show_content padding-large-bottom">
         <div class="show_list">
-          <ul class="list-media article-media" id="detail_show_news">
+          <ul class="list-media article-media " id="detail_show_news" style="position:relative;" data-animate="fadeInUp" data-delay="200">
            
           </ul>
         </div>
@@ -41,7 +41,9 @@
 </div>
 <script type="text/javascript">
   
+
   var newsobj={
+    container:'#detail_show_news',
     pages:{
       page:1,
       limit:10
@@ -55,6 +57,8 @@
         name:'newsInfo',
         interface:'getNewsInfoListByPage',
         data:newsobj.pages,
+        loadele:newsobj.container,
+
         success:function(res){
           if(res.code='000000'){
             var data=res.data;
@@ -72,18 +76,19 @@
               html+='    </div>';
               html+='  </div>';
               html+='  <div class="media-body">';
-              html+='    <h3><a href="javascript:;" data-id="'+data[i].newsId+'" onclick="tobar(3,'+("'/main/page/news/news_detail.html'")+',this);" title="</a></h3>';
-              html+='    <p class="desc">'+data[i].newsBrief+'</p>';
+              html+='    <h3><a href="javascript:;" data-id="'+data[i].newsId+'" onclick="tobar(3,'+("'/main/page/news/news_detail.html'")+',this);" >';
+              html+='    <p class="desc">'+data[i].newsBrief+'</p></a></h3>';
               html+='  </div>';
               html+='</div></li>';
             
             }
-              $('#detail_show_news').html(html);
+
+              $(newsobj.container).html(html);
               $('#newsPageSum').html(res.totalPage);
               $('#newsSumCount').html(res.count);
           }else{
 
-              $('#detail_show_news').html('此条目暂无新闻');
+              $(newsobj.container).html('此条目暂无新闻');
           }
         }
       })

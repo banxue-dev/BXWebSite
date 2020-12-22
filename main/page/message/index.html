@@ -97,12 +97,13 @@
     })
     if(isSub){
       admin.req({
-        name:'leavingMessage',
+        name:'leavingMessageInfo',
         interface:'addLeavingMessageInfo',
         data:params,
         success:function(res){
           if(res.code=='000000'){
             alert('提交成功');
+             document.getElementById("leavingMessageForm").reset();
           }else{
             alert(res.msg);
           }
