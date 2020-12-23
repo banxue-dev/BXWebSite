@@ -33,7 +33,7 @@
           
           </div>
           <div class="copy" ><label id="botCompanyEmail">250206374@qq.com</label>&nbsp;&nbsp;备案号:<label id="bot_web_recode"></label>&nbsp;&nbsp;</div>
-          <div class="foot-link">友情链接：<a href='http://www.dedesos.com/' target='_blank'>织梦源码</a> <a href='http://www.dedesos.com/' target='_blank'>模板王</a> <a href='http://www.dedesos.com' target='_blank'>织梦模版</a> <a href='http://www.dedesos.com/' target='_blank'>手机网站模板</a> <a href='http://www.dedesos.com/' target='_blank'>discuz模版</a> <a href='http://www.dedesos.com/' target='_blank'>网址源码</a> <a href='http://www.dedesos.com/' target='_blank'>网站模版</a> <a href='http://www.dedesos.com/' target='_blank'>响应式网站模板</a> <a href='http://fang.dedesos.com/' target='_blank'>仿站网</a> <a href='http://www.dedesos.com/' target='_blank'>dede模版</a> <a href='http://sc.dedesos.com/' target='_blank'>图标素材</a> </div>
+          <div class="foot-link" id="showFriendshipLink">友情链接：</div>
         </div>
       </div>
     </div>
@@ -61,5 +61,21 @@
         $('#bot_a_mail').html(tempc.companyEmail);
         $('#bot_a_mail').attr('href','mailto:'+tempc.contactPhone);
       }
+      var loadFriendShip=function(){
+        admin.req({
+          name:'friendshipLinkInfo',
+          interface:'getFriendshipLinkInfoList',
+          done:function(data){
+           if(data.length>0){
+              var html="";
+              for(var i=0;i<data.length;i++){
+                html+='<a href="'+data[i].linkUrl+'" target="_blank">'+data[i].linkName+'</a>';
+              }
+              $('#showFriendshipLink').append(html);
+           }
+          }
+        });
+      }
+      loadFriendShip();
       initBottom();
     </script>
