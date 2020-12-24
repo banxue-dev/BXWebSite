@@ -1,14 +1,11 @@
 
 var global_config={
-	//backuprequesturl: 'http:\/\/localhost:8091/family/' //全局请求前缀
+	// backuprequesturl: 'http:\/\/localhost:8091/family/' //全局请求前缀
 	backuprequesturl: 'http:\/\/www.banxue.fun:8091/family/' //全局请求前缀
 	,reqver:'/v1.0/'
 }
 var pageParams={};
 var groupType={
-	case:0,
-	news:1,
-	service:3
 }
 var eleExist=function(ele){
 	if($(ele).length<1){
@@ -120,6 +117,23 @@ var loadGroupInfo=function(){
 		done:function(data){
 			global_config.groupConfig=data;
 			//浏览器标题显示用的
+			
+			loadGroupType();
+		}
+	});
+}
+var loadGroupType=function(){
+	//加载分组配置
+	admin.req({
+		name:'groupType',
+		interface:'getGroupTypeList',
+		done:function(data){
+			if(data.length>0){
+				for(var i=0;i<data.length;i++){
+					groupType[data[i].typeCode]=data[i].typeValue;
+				}
+			}
+			//浏览器标题显示用的
 			loadAboutOurInfo();
 		}
 	});
@@ -131,7 +145,21 @@ var loadAboutOurInfo=function(){
 		interface:'getAboutOurInfoSingle',
 		done:function(data){
 			global_config.aboutOurInfo=data;
-			initDataLoaddBack();
+			loadBanner();
+		}
+	});
+}
+//加载banner
+var loadBanner=function(){
+	admin.req({
+		name:'bannerInfo',
+		interface:'getBannerInfoList',
+		done:function(data){
+			if(data.length>0){
+				global_config.bannerInfo=data;
+
+				initDataLoaddBack();
+			}
 		}
 	});
 }
